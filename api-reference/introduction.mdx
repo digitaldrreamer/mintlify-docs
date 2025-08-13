@@ -1,28 +1,27 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'SD Proctor API Gateway — OpenAPI-powered reference'
 ---
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  This API reference is auto-sourced from the backend’s generated OpenAPI (swagger.json), ensuring it stays aligned with the deployed API Gateway.
 </Note>
 
 ## Welcome
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). This site uses the generated OpenAPI specification from the API Gateway.
 
 <Card
-  title="Plant Store Endpoints"
+  title="SD Proctor API Endpoints"
   icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  href="/api-reference/openapi.json"
 >
-  View the OpenAPI specification file
+  View the OpenAPI specification file used by this site
 </Card>
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Most API endpoints require Bearer tokens. Use the Authorize button in the live playground to test authenticated calls.
 
 ```json
 "security": [

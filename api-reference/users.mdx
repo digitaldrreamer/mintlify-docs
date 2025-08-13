@@ -1,0 +1,134 @@
+---
+title: "Users & Sessions"
+description: "User management, profile, and session operations"
+---
+
+## Users
+
+All endpoints require `Authorization: Bearer <access_token>`. Role limits noted.
+
+### List users
+
+GET `/api/v1/users`
+
+Query: `offset`, `limit`, `sort_by`, `sort_order`.
+
+### Create user (admin, super_admin)
+
+POST `/api/v1/users`
+
+Request
+```json
+{
+  "email": "user@example.com",
+  "password": "Password123!",
+  "first_name": "Jane",
+  "last_name": "Doe",
+  "role": "student",
+  "organization": "",
+  "phone_number": ""
+}
+```
+
+### Search users (admin, super_admin)
+
+POST `/api/v1/users/search`
+
+Request
+```json
+{
+  "email": "",
+  "first_name": "",
+  "last_name": "",
+  "role": "",
+  "organization": "",
+  "is_active": true,
+  "created_after": 0,
+  "created_before": 0,
+  "limit": 10,
+  "offset": 0
+}
+```
+
+### Stats (admin, super_admin)
+
+GET `/api/v1/users/stats`
+
+### Users by role (admin, super_admin)
+
+GET `/api/v1/users/role/:role`
+
+### Update own profile
+
+PUT `/api/v1/users/profile`
+
+Request
+```json
+{ "first_name": "Jane", "last_name": "Doe", "organization": "", "phone_number": "" }
+```
+
+### Exam history (self)
+
+GET `/api/v1/users/exams/history` with `page` and `limit`.
+
+### Update user (admin, super_admin)
+
+PUT `/api/v1/users/:id`
+
+### Set user status (admin, super_admin)
+
+PATCH `/api/v1/users/:id/status`
+
+Request
+```json
+{ "is_active": true }
+```
+
+### Update role (super_admin)
+
+PATCH `/api/v1/users/:id/role`
+
+Request
+```json
+{ "role": "admin" }
+```
+
+### Verify email (admin, super_admin)
+
+POST `/api/v1/users/:id/verify-email`
+
+## Sessions
+
+### My sessions
+
+GET `/api/v1/sessions`
+
+### Deactivate current session
+
+DELETE `/api/v1/sessions/current`
+
+### Deactivate all my sessions
+
+DELETE `/api/v1/sessions/all`
+
+### Deactivate a session by token
+
+DELETE `/api/v1/sessions/:token`
+
+### Extend a session by token
+
+PATCH `/api/v1/sessions/:token/extend`
+
+Request
+```json
+{ "duration": 3600 }
+```
+
+### Admin session operations
+
+- GET `/api/v1/sessions/active`
+- POST `/api/v1/sessions/cleanup`
+- GET `/api/v1/sessions/user/:id`
+- DELETE `/api/v1/sessions/user/:id/all`
+
+

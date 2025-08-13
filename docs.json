@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "SD Proctor Backend Docs",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -51,18 +51,45 @@
         "tab": "API reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Introduction",
             "pages": [
               "api-reference/introduction"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Auth",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/auth"
+            ]
+          },
+          {
+            "group": "Users",
+            "pages": [
+              "api-reference/users"
+            ]
+          },
+          {
+            "group": "Exams",
+            "pages": [
+              "api-reference/exams"
+            ]
+          },
+          {
+            "group": "Biometric",
+            "pages": [
+              "api-reference/biometric"
+            ]
+          },
+          {
+            "group": "Proctoring",
+            "pages": [
+              "api-reference/proctoring"
+            ]
+          },
+          {
+            "group": "Utilities",
+            "pages": [
+              "api-reference/utilities"
             ]
           }
         ]
@@ -107,15 +134,15 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
