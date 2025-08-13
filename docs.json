@@ -24,47 +24,12 @@
       },
       {
         "tab": "API reference",
+        "openapi": "/api-reference/openapi.json",
         "groups": [
           {
             "group": "Introduction",
             "pages": [
               "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Auth",
-            "pages": [
-              "api-reference/auth"
-            ]
-          },
-          {
-            "group": "Users",
-            "pages": [
-              "api-reference/users"
-            ]
-          },
-          {
-            "group": "Exams",
-            "pages": [
-              "api-reference/exams"
-            ]
-          },
-          {
-            "group": "Biometric",
-            "pages": [
-              "api-reference/biometric"
-            ]
-          },
-          {
-            "group": "Proctoring",
-            "pages": [
-              "api-reference/proctoring"
-            ]
-          },
-          {
-            "group": "Utilities",
-            "pages": [
-              "api-reference/utilities"
             ]
           }
         ]
