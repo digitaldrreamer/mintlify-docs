@@ -79,9 +79,9 @@
   "navbar": {
     "links": [],
     "primary": {
-      "type": "button",
-      "label": "API Reference",
-      "href": "/api-reference/introduction"
+      "type": "github",
+      "label": "GitHub",
+      "href": "https://github.com/digitaldrreamer/mintlify-docs"
     }
   },
   "contextual": {
