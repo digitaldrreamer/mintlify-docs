@@ -79,9 +79,9 @@
   "navbar": {
     "links": [],
     "primary": {
-      "type": "none",
-      "label": "",
-      "href": ""
+      "type": "button",
+      "label": "API Reference",
+      "href": "/api-reference/introduction"
     }
   },
   "contextual": {
