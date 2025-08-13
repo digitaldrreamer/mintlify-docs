@@ -25,8 +25,8 @@
       {
         "tab": "API reference",
         "openapi": [
-          "api-reference/openapi.json",
-          "api-reference/openapi.yaml"
+          "https://raw.githubusercontent.com/digitaldrreamer/mintlify-docs/main/api-reference/openapi.yaml",
+          "https://raw.githubusercontent.com/digitaldrreamer/mintlify-docs/main/api-reference/openapi.json"
         ],
         "groups": [
           {
