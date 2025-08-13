@@ -1,0 +1,181 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SD Proctor API Gateway",
+    "version": "1.0.0",
+    "description": "Complete OpenAPI for frontend consumption across Auth, Users, Sessions, Exams, Biometric, and Proctoring.",
+    "contact": {"name": "SD Proctor", "email": "support@sdproctor.com"},
+    "license": {"name": "MIT", "url": "https://opensource.org/licenses/MIT"}
+  },
+  "servers": [
+    {"url": "https://api-gateway-wzvv6inzaa-ue.a.run.app", "description": "Production"},
+    {"url": "http://localhost:8000", "description": "Local"}
+  ],
+  "security": [{"BearerAuth": []}],
+  "paths": {
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "User login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/LoginRequest"},
+              "example": {"email": "user@example.com", "password": "Password123!"}
+            }
+          }
+        },
+        "responses": {
+          "200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/LoginResponse"}}}},
+          "401": {"description": "Unauthorized", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}
+        },
+        "security": []
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Register",
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/RegisterRequest"}}}},
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/RegisterResponse"}}}}},
+        "security": []
+      }
+    },
+    "/api/v1/auth/validate": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Validate token",
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ValidateTokenRequest"}}}},
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ValidateTokenResponse"}}}}},
+        "security": []
+      }
+    },
+    "/api/v1/auth/me": {"get": {"tags": ["auth"], "summary": "Me", "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/User"}}}}}}},
+    "/api/v1/auth/check-permission": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Check permission",
+        "parameters": [
+          {"name": "resource", "in": "query", "required": true, "schema": {"type": "string"}},
+          {"name": "action", "in": "query", "required": true, "schema": {"type": "string"}}
+        ],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"type": "object"}, "example": {"allowed": true, "resource": "users", "action": "read"}}}}}
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Logout",
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/LogoutRequest"}}}},
+        "responses": {"200": {"description": "OK"}}
+      }
+    },
+
+    "/api/v1/users": {
+      "get": {
+        "tags": ["users"], "summary": "List users",
+        "parameters": [
+          {"name": "offset", "in": "query", "schema": {"type": "integer", "default": 0}},
+          {"name": "limit", "in": "query", "schema": {"type": "integer", "default": 10}},
+          {"name": "sort_by", "in": "query", "schema": {"type": "string", "default": "created_at"}},
+          {"name": "sort_order", "in": "query", "schema": {"type": "string", "default": "desc"}}
+        ],
+        "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PaginatedUsers"}}}}}
+      },
+      "post": {
+        "tags": ["users"], "summary": "Create user (admin)",
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreateUserRequest"}}}},
+        "responses": {"201": {"description": "Created", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/User"}}}}}
+      }
+    },
+    "/api/v1/users/search": {"post": {"tags": ["users"], "summary": "Search users (admin)", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SearchUsersRequest"}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/users/stats": {"get": {"tags": ["users"], "summary": "Stats (admin)", "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/users/role/{role}": {"get": {"tags": ["users"], "summary": "Users by role (admin)", "parameters": [{"name": "role", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/users/profile": {"put": {"tags": ["users"], "summary": "Update profile", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UpdateProfileRequest"}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/users/exams/history": {"get": {"tags": ["users"], "summary": "Exam history", "parameters": [{"name": "page", "in": "query", "schema": {"type": "integer", "default": 1}}, {"name": "limit", "in": "query", "schema": {"type": "integer", "default": 10}}], "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/users/{id}": {"put": {"tags": ["users"], "summary": "Update user (admin)", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UpdateUserRequest"}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/users/{id}/status": {"patch": {"tags": ["users"], "summary": "Set status (admin)", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"is_active": {"type": "boolean"}}, "required": ["is_active"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/users/{id}/role": {"patch": {"tags": ["users"], "summary": "Update role (super_admin)", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"role": {"type": "string"}}, "required": ["role"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/users/{id}/verify-email": {"post": {"tags": ["users"], "summary": "Verify email (admin)", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}},
+
+    "/api/v1/sessions": {"get": {"tags": ["sessions"], "summary": "My sessions", "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"type": "array", "items": {"$ref": "#/components/schemas/Session"}}}}}}}},
+    "/api/v1/sessions/current": {"delete": {"tags": ["sessions"], "summary": "Deactivate current", "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/sessions/all": {"delete": {"tags": ["sessions"], "summary": "Deactivate all mine", "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/sessions/{token}": {"delete": {"tags": ["sessions"], "summary": "Deactivate by token", "parameters": [{"name": "token", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/sessions/{token}/extend": {"patch": {"tags": ["sessions"], "summary": "Extend session", "parameters": [{"name": "token", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"duration": {"type": "integer", "minimum": 1}}, "required": ["duration"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/sessions/active": {"get": {"tags": ["sessions"], "summary": "Active (admin)", "parameters": [{"name": "limit", "in": "query", "schema": {"type": "integer", "default": 50}}, {"name": "offset", "in": "query", "schema": {"type": "integer", "default": 0}}], "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/sessions/cleanup": {"post": {"tags": ["sessions"], "summary": "Cleanup expired (admin)", "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/sessions/user/{id}": {"get": {"tags": ["sessions"], "summary": "Sessions by user (admin)", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/sessions/user/{id}/all": {"delete": {"tags": ["sessions"], "summary": "Deactivate all for user (admin)", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}},
+
+    "/api/v1/exams": {"get": {"tags": ["exams"], "summary": "List my exams", "responses": {"200": {"description": "OK"}}}, "post": {"tags": ["exams"], "summary": "Create exam (admin/instructor)", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreateExamRequest"}}}}, "responses": {"201": {"description": "Created"}}}},
+    "/api/v1/exams/{id}": {"get": {"tags": ["exams"], "summary": "Get exam", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/exams/{id}/validate-access": {"get": {"tags": ["exams"], "summary": "Validate access", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}, "403": {"description": "Forbidden"}}}},
+    "/api/v1/exams/{id}/start": {"post": {"tags": ["exams"], "summary": "Start exam", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/exams/submit": {"post": {"tags": ["exams"], "summary": "Submit answers", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ExamSubmission"}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/exams/{id}/results": {"get": {"tags": ["exams"], "summary": "Results", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "session_id", "in": "query", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/exams/{id}/stats": {"get": {"tags": ["exams"], "summary": "Exam stats (admin/instructor)", "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}},
+
+    "/api/v1/biometric/register": {"post": {"tags": ["biometric"], "summary": "Register biometric (multipart)", "requestBody": {"required": true, "content": {"multipart/form-data": {"schema": {"type": "object", "properties": {"image_data": {"type": "string", "format": "binary"}, "type": {"type": "integer", "description": "0 face, 1 fingerprint, 2 voice"}}, "required": ["image_data", "type"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/biometric/session/start": {"post": {"tags": ["biometric"], "summary": "Start biometric session", "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"continuous_monitoring": {"type": "boolean"}}}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/biometric/session/active": {"get": {"tags": ["biometric"], "summary": "Active biometric session", "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/biometric/session/end": {"post": {"tags": ["biometric"], "summary": "End biometric session", "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"session_id": {"type": "string"}}, "required": ["session_id"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/biometric/verify": {"post": {"tags": ["biometric"], "summary": "Verify identity (multipart)", "requestBody": {"required": true, "content": {"multipart/form-data": {"schema": {"type": "object", "properties": {"image_data": {"type": "string", "format": "binary"}, "type": {"type": "integer"}, "session_id": {"type": "string"}}}}}}, "responses": {"200": {"description": "OK"}, "401": {"description": "Verification failed"}}}},
+    "/api/v1/biometric/continuous-verify": {"post": {"tags": ["biometric"], "summary": "Continuous verify (base64)", "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"session_id": {"type": "string"}, "image_data": {"type": "string"}}, "required": ["session_id", "image_data"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/biometric/liveness": {"post": {"tags": ["biometric"], "summary": "Liveness", "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"image_data": {"type": "string"}, "challenge": {"type": "object"}}, "required": ["image_data"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/biometric/status": {"get": {"tags": ["biometric"], "summary": "Biometric status", "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/biometric/record/{recordId}": {"get": {"tags": ["biometric"], "summary": "Get record", "parameters": [{"name": "recordId", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}, "404": {"description": "Not Found"}}}, "delete": {"tags": ["biometric"], "summary": "Delete record (admin)", "parameters": [{"name": "recordId", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"501": {"description": "Not Implemented"}}}},
+    "/api/v1/biometric/health": {"get": {"tags": ["biometric"], "summary": "Service health (admin)", "responses": {"200": {"description": "OK"}}}},
+
+    "/api/v1/proctoring/sessions": {"post": {"tags": ["proctoring"], "summary": "Start proctoring session", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StartProctoringSessionRequest"}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/proctoring/sessions/{sessionId}/end": {"post": {"tags": ["proctoring"], "summary": "End proctoring session", "parameters": [{"name": "sessionId", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"reason": {"type": "string"}}}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/proctoring/sessions/{sessionId}/status": {"get": {"tags": ["proctoring"], "summary": "Get proctoring status", "parameters": [{"name": "sessionId", "in": "path", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/proctoring/sessions/{sessionId}/events": {
+      "post": {"tags": ["proctoring"], "summary": "Report event", "parameters": [{"name": "sessionId", "in": "path", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ProctoringEventWrapper"}}}}, "responses": {"200": {"description": "OK"}}},
+      "get": {"tags": ["proctoring"], "summary": "List events", "parameters": [{"name": "sessionId", "in": "path", "required": true, "schema": {"type": "string"}}, {"name": "from_timestamp", "in": "query", "schema": {"type": "integer"}}, {"name": "to_timestamp", "in": "query", "schema": {"type": "integer"}}, {"name": "event_types", "in": "query", "description": "Comma-separated event type names", "schema": {"type": "string"}}], "responses": {"200": {"description": "OK"}}}
+    },
+    "/api/v1/proctoring/events/stream": {"get": {"tags": ["proctoring"], "summary": "Stream events (placeholder)", "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/proctoring/events/identity-verification": {"post": {"tags": ["proctoring"], "summary": "Create identity verification event", "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"session_id": {"type": "string"}, "face_image": {"type": "string", "format": "byte"}, "confidence_score": {"type": "number"}}, "required": ["session_id", "face_image"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/proctoring/events/suspicious-behavior": {"post": {"tags": ["proctoring"], "summary": "Create suspicious behavior event", "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"session_id": {"type": "string"}, "description": {"type": "string"}, "severity": {"type": "string", "enum": ["LOW", "MEDIUM", "HIGH"]}, "screenshot": {"type": "string", "format": "byte"}}, "required": ["session_id", "description"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/proctoring/events/application-switch": {"post": {"tags": ["proctoring"], "summary": "Create application switch event", "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"session_id": {"type": "string"}, "active_applications": {"type": "array", "items": {"type": "string"}}}, "required": ["session_id", "active_applications"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/proctoring/events/network-issue": {"post": {"tags": ["proctoring"], "summary": "Create network issue event", "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "properties": {"session_id": {"type": "string"}, "description": {"type": "string"}, "ip_address": {"type": "string"}}, "required": ["session_id", "description"]}}}}, "responses": {"200": {"description": "OK"}}}},
+    "/api/v1/proctoring/settings/default": {"get": {"tags": ["proctoring"], "summary": "Get default settings", "responses": {"200": {"description": "OK"}}}},
+
+    "/health": {"get": {"tags": ["health"], "summary": "Health", "responses": {"200": {"description": "OK"}}}, "security": []},
+    "/ready": {"get": {"tags": ["health"], "summary": "Ready", "responses": {"200": {"description": "OK"}, "503": {"description": "Unavailable"}}}, "security": []},
+    "/live": {"get": {"tags": ["health"], "summary": "Live", "responses": {"200": {"description": "OK"}}}, "security": []}
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
+    },
+    "schemas": {
+      "ErrorResponse": {"type": "object", "properties": {"error": {"type": "string"}, "code": {"type": "string"}, "details": {"type": "string"}}},
+      "User": {"type": "object", "properties": {"id": {"type": "string"}, "email": {"type": "string"}, "first_name": {"type": "string"}, "last_name": {"type": "string"}, "role": {"type": "string"}, "is_active": {"type": "boolean"}, "email_verified": {"type": "boolean"}, "created_at": {"type": "integer"}}},
+      "LoginRequest": {"type": "object", "properties": {"email": {"type": "string", "format": "email"}, "password": {"type": "string", "minLength": 8}}, "required": ["email", "password"]},
+      "LoginResponse": {"type": "object", "properties": {"success": {"type": "boolean"}, "access_token": {"type": "string"}, "refresh_token": {"type": "string"}, "session_id": {"type": "string"}, "expires_at": {"type": "integer"}, "user": {"$ref": "#/components/schemas/User"}}},
+      "RegisterRequest": {"type": "object", "properties": {"email": {"type": "string", "format": "email"}, "password": {"type": "string", "minLength": 8}, "first_name": {"type": "string"}, "last_name": {"type": "string"}, "role": {"type": "string"}, "organization": {"type": "string"}, "phone_number": {"type": "string"}}, "required": ["email", "password", "first_name", "last_name"]},
+      "RegisterResponse": {"type": "object", "properties": {"success": {"type": "boolean"}, "user": {"$ref": "#/components/schemas/User"}}},
+      "ValidateTokenRequest": {"type": "object", "properties": {"token": {"type": "string"}}, "required": ["token"]},
+      "ValidateTokenResponse": {"type": "object", "properties": {"valid": {"type": "boolean"}, "user_id": {"type": "string"}, "role": {"type": "string"}, "expires_at": {"type": "integer"}, "session_id": {"type": "string"}, "error": {"type": "string"}}},
+      "LogoutRequest": {"type": "object", "properties": {"session_token": {"type": "string"}, "access_token": {"type": "string"}, "refresh_token": {"type": "string"}}, "required": ["session_token"]},
+
+      "CreateUserRequest": {"type": "object", "properties": {"email": {"type": "string", "format": "email"}, "password": {"type": "string", "minLength": 8}, "first_name": {"type": "string"}, "last_name": {"type": "string"}, "role": {"type": "string"}, "organization": {"type": "string"}, "phone_number": {"type": "string"}}, "required": ["email", "password", "first_name", "last_name", "role"]},
+      "UpdateUserRequest": {"type": "object", "properties": {"email": {"type": "string", "format": "email"}, "first_name": {"type": "string"}, "last_name": {"type": "string"}, "organization": {"type": "string"}, "phone_number": {"type": "string"}}},
+      "UpdateProfileRequest": {"type": "object", "properties": {"first_name": {"type": "string"}, "last_name": {"type": "string"}, "organization": {"type": "string"}, "phone_number": {"type": "string"}}},
+      "SearchUsersRequest": {"type": "object", "properties": {"email": {"type": "string"}, "first_name": {"type": "string"}, "last_name": {"type": "string"}, "role": {"type": "string"}, "organization": {"type": "string"}, "is_active": {"type": "boolean"}, "created_after": {"type": "integer"}, "created_before": {"type": "integer"}, "limit": {"type": "integer"}, "offset": {"type": "integer"}}},
+      "PaginatedUsers": {"type": "object", "properties": {"users": {"type": "array", "items": {"$ref": "#/components/schemas/User"}}, "total_count": {"type": "integer"}, "limit": {"type": "integer"}, "offset": {"type": "integer"}}},
+
+      "Session": {"type": "object", "properties": {"id": {"type": "string"}, "user_id": {"type": "string"}, "expires_at": {"type": "integer"}, "ip_address": {"type": "string"}, "user_agent": {"type": "string"}, "is_active": {"type": "boolean"}, "created_at": {"type": "integer"}}},
+
+      "CreateExamRequest": {"type": "object", "properties": {"title": {"type": "string"}, "description": {"type": "string"}, "duration": {"type": "integer"}, "questions": {"type": "array", "items": {"type": "object"}}}, "required": ["title", "duration"]},
+      "ExamSubmission": {"type": "object", "properties": {"session_id": {"type": "string"}, "answers": {"type": "array", "items": {"type": "object", "properties": {"question_id": {"type": "string"}, "response": {"type": "string"}}}}}, "required": ["session_id", "answers"]},
+
+      "StartProctoringSessionRequest": {"type": "object", "properties": {"exam_session_id": {"type": "string"}, "candidate_id": {"type": "string"}, "exam_id": {"type": "string"}, "settings": {"type": "object"}}, "required": ["exam_session_id", "candidate_id", "exam_id"]},
+      "ProctoringEventWrapper": {"type": "object", "properties": {"event": {"type": "object", "description": "Proctoring event payload"}}, "required": ["event"]}
+    }
+  }
+}
+
+
