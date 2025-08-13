@@ -1,0 +1,2591 @@
+basePath: /api/v1
+definitions:
+  api-gateway_internal_models_exam_models.CreateExamRequest:
+    properties:
+      created_by:
+        type: string
+      description:
+        example: Basic mathematics quiz covering algebra
+        type: string
+      duration:
+        example: 90
+        type: integer
+      is_active:
+        example: true
+        type: boolean
+      questions:
+        items:
+          $ref: '#/definitions/api-gateway_internal_models_exam_models.Question'
+        type: array
+      title:
+        example: Mathematics Quiz
+        type: string
+    required:
+    - duration
+    - title
+    type: object
+  api-gateway_internal_models_exam_models.Exam:
+    properties:
+      created_at:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+      created_by:
+        example: user_456
+        type: string
+      description:
+        example: Basic mathematics quiz
+        type: string
+      duration:
+        example: 3600
+        type: integer
+      id:
+        example: exam_123
+        type: string
+      is_active:
+        example: true
+        type: boolean
+      questions:
+        items:
+          $ref: '#/definitions/api-gateway_internal_models_exam_models.Question'
+        type: array
+      title:
+        example: Mathematics Quiz
+        type: string
+      updated_at:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+    type: object
+  api-gateway_internal_models_exam_models.ExamAccessResponse:
+    properties:
+      error:
+        type: string
+      exam:
+        $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamInfo'
+      has_access:
+        example: true
+        type: boolean
+      message:
+        example: Access granted
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  api-gateway_internal_models_exam_models.ExamCreateResponse:
+    properties:
+      data:
+        $ref: '#/definitions/api-gateway_internal_models_exam_models.Exam'
+      message:
+        example: Exam created successfully
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  api-gateway_internal_models_exam_models.ExamHistoryResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/api-gateway_internal_models_exam_models.Exam'
+        type: array
+      pagination:
+        $ref: '#/definitions/api-gateway_internal_models_exam_models.Pagination'
+      success:
+        example: true
+        type: boolean
+    type: object
+  api-gateway_internal_models_exam_models.ExamInfo:
+    properties:
+      created_at:
+        example: 1640995200
+        type: integer
+      created_by:
+        example: user_456
+        type: string
+      description:
+        example: Basic mathematics quiz
+        type: string
+      duration:
+        example: 3600
+        type: integer
+      id:
+        example: exam_123
+        type: string
+      is_active:
+        example: true
+        type: boolean
+      questions:
+        example: 10
+        type: integer
+      title:
+        example: Mathematics Quiz
+        type: string
+    type: object
+  api-gateway_internal_models_exam_models.ExamListResponse:
+    properties:
+      count:
+        example: 5
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/api-gateway_internal_models_exam_models.Exam'
+        type: array
+      success:
+        example: true
+        type: boolean
+    type: object
+  api-gateway_internal_models_exam_models.ExamResponse:
+    properties:
+      data:
+        $ref: '#/definitions/api-gateway_internal_models_exam_models.Exam'
+      success:
+        example: true
+        type: boolean
+    type: object
+  api-gateway_internal_models_exam_models.ExamResult:
+    properties:
+      exam_id:
+        example: exam_123
+        type: string
+      id:
+        example: result_123
+        type: string
+      max_score:
+        example: 100
+        type: number
+      passed:
+        example: true
+        type: boolean
+      score:
+        example: 85.5
+        type: number
+      session_id:
+        example: session_123
+        type: string
+      submitted_at:
+        example: 1640995200
+        type: integer
+      user_id:
+        example: user_456
+        type: string
+    type: object
+  api-gateway_internal_models_exam_models.ExamResultsResponse:
+    properties:
+      data:
+        $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamResult'
+      message:
+        example: Results retrieved successfully
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  api-gateway_internal_models_exam_models.ExamSession:
+    properties:
+      exam_id:
+        example: exam_123
+        type: string
+      expires_at:
+        example: 1640998800
+        type: integer
+      id:
+        example: session_123
+        type: string
+      started_at:
+        example: 1640995200
+        type: integer
+      token:
+        example: session_token_123
+        type: string
+      user_id:
+        example: user_456
+        type: string
+    type: object
+  api-gateway_internal_models_exam_models.ExamSessionResponse:
+    properties:
+      data:
+        $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamSession'
+      message:
+        example: Exam session started successfully
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  api-gateway_internal_models_exam_models.ExamStats:
+    properties:
+      average_score:
+        example: 78.5
+        type: number
+      completed_attempts:
+        example: 20
+        type: integer
+      exam_id:
+        example: exam_123
+        type: string
+      pass_rate:
+        example: 80
+        type: number
+      total_attempts:
+        example: 25
+        type: integer
+      total_participants:
+        example: 20
+        type: integer
+    type: object
+  api-gateway_internal_models_exam_models.ExamStatsResponse:
+    properties:
+      data:
+        $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamStats'
+      message:
+        example: Exam statistics retrieved successfully
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  api-gateway_internal_models_exam_models.ExamSubmissionResponse:
+    properties:
+      data:
+        $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamResult'
+      message:
+        example: Exam submitted successfully
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  api-gateway_internal_models_exam_models.Pagination:
+    properties:
+      limit:
+        example: 10
+        type: integer
+      page:
+        example: 1
+        type: integer
+      total:
+        example: 50
+        type: integer
+      total_pages:
+        example: 5
+        type: integer
+    type: object
+  api-gateway_internal_models_exam_models.Question:
+    properties:
+      correct_answer:
+        example: Option A
+        type: string
+      id:
+        example: q1
+        type: string
+      options:
+        example:
+        - Option A
+        - Option B
+        - Option C
+        - Option D
+        items:
+          type: string
+        type: array
+      text:
+        example: What is 2+2?
+        type: string
+      type:
+        example: multiple_choice
+        type: string
+    type: object
+  api-gateway_internal_models_exam_models.SubmitExamRequest:
+    properties:
+      answers:
+        additionalProperties:
+          type: string
+        description: Question ID -> Answer
+        type: object
+      session_id:
+        example: session_123
+        type: string
+      user_id:
+        type: string
+    required:
+    - answers
+    - session_id
+    type: object
+  api-gateway_internal_services.Anomaly:
+    properties:
+      description:
+        type: string
+      detectedAt:
+        format: int64
+        type: integer
+      severity:
+        format: float32
+        type: number
+      type:
+        $ref: '#/definitions/api-gateway_internal_services.AnomalyType'
+    type: object
+  api-gateway_internal_services.AnomalyType:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    format: int32
+    type: integer
+    x-enum-varnames:
+    - AnomalyTypeIdentityMismatch
+    - AnomalyTypeLivenessFailure
+    - AnomalyTypeMultipleFaces
+    - AnomalyTypeNoFaceDetected
+    - AnomalyTypePoorImageQuality
+    - AnomalyTypeSuspiciousBehavior
+  api-gateway_internal_services.BiometricRecord:
+    properties:
+      id:
+        type: string
+      isActive:
+        type: boolean
+      qualityScore:
+        format: float32
+        type: number
+      registeredAt:
+        format: int64
+        type: integer
+      type:
+        $ref: '#/definitions/api-gateway_internal_services.BiometricType'
+    type: object
+  api-gateway_internal_services.BiometricSessionInfo:
+    properties:
+      anomalyCount:
+        format: int64
+        type: integer
+      continuousMonitoring:
+        type: boolean
+      failedVerifications:
+        format: int64
+        type: integer
+      initialVerificationPassed:
+        type: boolean
+      isActive:
+        type: boolean
+      lastVerificationAt:
+        format: int64
+        type: integer
+      sessionID:
+        type: string
+      startedAt:
+        format: int64
+        type: integer
+      successfulVerifications:
+        format: int64
+        type: integer
+      userID:
+        type: string
+      verificationAttempts:
+        format: int64
+        type: integer
+    type: object
+  api-gateway_internal_services.BiometricType:
+    enum:
+    - 0
+    - 1
+    - 2
+    format: int32
+    type: integer
+    x-enum-varnames:
+    - BiometricTypeFace
+    - BiometricTypeFingerprint
+    - BiometricTypeVoice
+  api-gateway_internal_services.ChallengeType:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    format: int32
+    type: integer
+    x-enum-varnames:
+    - ChallengeTypeBlink
+    - ChallengeTypeSmile
+    - ChallengeTypeTurnHeadLeft
+    - ChallengeTypeTurnHeadRight
+    - ChallengeTypeNod
+  api-gateway_internal_services.FaceQuality:
+    properties:
+      brightness:
+        format: float32
+        type: number
+      eyesVisible:
+        type: boolean
+      faceSize:
+        format: float32
+        type: number
+      mouthVisible:
+        type: boolean
+      sharpness:
+        format: float32
+        type: number
+    type: object
+  api-gateway_internal_services.LivenessChallenge:
+    properties:
+      durationSeconds:
+        format: int32
+        type: integer
+      instruction:
+        type: string
+      type:
+        $ref: '#/definitions/api-gateway_internal_services.ChallengeType'
+    type: object
+  api-gateway_internal_services.VerificationDetails:
+    properties:
+      faceMatchScore:
+        format: float32
+        type: number
+      faceQuality:
+        $ref: '#/definitions/api-gateway_internal_services.FaceQuality'
+      livenessScore:
+        format: float32
+        type: number
+      warnings:
+        items:
+          type: string
+        type: array
+    type: object
+  gin.H:
+    additionalProperties: {}
+    type: object
+  internal_handlers.BiometricStatusResponse:
+    properties:
+      error:
+        type: string
+      records:
+        items:
+          $ref: '#/definitions/api-gateway_internal_services.BiometricRecord'
+        type: array
+      registered:
+        example: true
+        type: boolean
+      user_id:
+        example: user_456
+        type: string
+    type: object
+  internal_handlers.ContinuousVerificationRequest:
+    properties:
+      image_data:
+        example: base64_encoded_image_data
+        type: string
+      session_id:
+        example: session_123
+        type: string
+    required:
+    - image_data
+    - session_id
+    type: object
+  internal_handlers.ContinuousVerificationResponse:
+    properties:
+      anomalies:
+        items:
+          $ref: '#/definitions/api-gateway_internal_services.Anomaly'
+        type: array
+      confidence_score:
+        example: 0.95
+        type: number
+      error:
+        type: string
+      identity_verified:
+        example: true
+        type: boolean
+      liveness_verified:
+        example: true
+        type: boolean
+      message:
+        example: Continuous verification passed
+        type: string
+    type: object
+  internal_handlers.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      organization:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      phone_number:
+        type: string
+      role:
+        type: string
+    required:
+    - email
+    - first_name
+    - last_name
+    - password
+    - role
+    type: object
+  internal_handlers.DetectLivenessRequest:
+    properties:
+      challenge:
+        $ref: '#/definitions/api-gateway_internal_services.LivenessChallenge'
+      image_data:
+        example: base64_encoded_image_data
+        type: string
+    required:
+    - image_data
+    type: object
+  internal_handlers.DetectLivenessResponse:
+    properties:
+      confidence_score:
+        example: 0.92
+        type: number
+      error:
+        type: string
+      is_live:
+        example: true
+        type: boolean
+      message:
+        example: Liveness detected
+        type: string
+    type: object
+  internal_handlers.EndBiometricSessionRequest:
+    properties:
+      session_id:
+        example: session_123
+        type: string
+    required:
+    - session_id
+    type: object
+  internal_handlers.EndBiometricSessionResponse:
+    properties:
+      message:
+        example: Session ended successfully
+        type: string
+      success:
+        example: true
+        type: boolean
+      summary:
+        $ref: '#/definitions/internal_handlers.SessionSummaryResp'
+    type: object
+  internal_handlers.ErrorResponse:
+    properties:
+      code:
+        type: string
+      details:
+        type: string
+      error:
+        type: string
+    type: object
+  internal_handlers.ExtendSessionRequest:
+    properties:
+      duration:
+        minimum: 1
+        type: integer
+    required:
+    - duration
+    type: object
+  internal_handlers.GetActiveBiometricSessionResponse:
+    properties:
+      has_active_session:
+        example: true
+        type: boolean
+      message:
+        example: Active session found
+        type: string
+      session_info:
+        $ref: '#/definitions/api-gateway_internal_services.BiometricSessionInfo'
+    type: object
+  internal_handlers.HealthResponse:
+    properties:
+      services:
+        additionalProperties:
+          type: string
+        type: object
+      status:
+        type: string
+      timestamp:
+        type: integer
+      version:
+        type: string
+    type: object
+  internal_handlers.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  internal_handlers.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      error:
+        type: string
+      expires_at:
+        type: integer
+      refresh_token:
+        type: string
+      session_id:
+        type: string
+      success:
+        type: boolean
+      user:
+        $ref: '#/definitions/internal_handlers.UserResponse'
+    type: object
+  internal_handlers.RegisterBiometricRequest:
+    properties:
+      image_data:
+        example: base64_encoded_image_data
+        type: string
+      type:
+        allOf:
+        - $ref: '#/definitions/api-gateway_internal_services.BiometricType'
+        example: 0
+    required:
+    - image_data
+    - type
+    type: object
+  internal_handlers.RegisterBiometricResponse:
+    properties:
+      biometric_id:
+        example: bio_123456
+        type: string
+      error:
+        type: string
+      message:
+        example: Biometric registered successfully
+        type: string
+      quality_score:
+        example: 0.95
+        type: number
+      success:
+        example: true
+        type: boolean
+    type: object
+  internal_handlers.RegisterRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      organization:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      phone_number:
+        type: string
+      role:
+        type: string
+    required:
+    - email
+    - first_name
+    - last_name
+    - password
+    type: object
+  internal_handlers.RegisterResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+      user:
+        $ref: '#/definitions/internal_handlers.UserResponse'
+    type: object
+  internal_handlers.SearchUsersRequest:
+    properties:
+      created_after:
+        type: integer
+      created_before:
+        type: integer
+      email:
+        type: string
+      first_name:
+        type: string
+      is_active:
+        type: boolean
+      last_name:
+        type: string
+      limit:
+        type: integer
+      offset:
+        type: integer
+      organization:
+        type: string
+      role:
+        type: string
+    type: object
+  internal_handlers.SessionSummaryResp:
+    properties:
+      duration_seconds:
+        example: 3600
+        type: integer
+      failed_verifications:
+        example: 2
+        type: integer
+      session_id:
+        example: session_123
+        type: string
+      success_rate:
+        example: 0.96
+        type: number
+      successful_verifications:
+        example: 48
+        type: integer
+      total_anomalies:
+        example: 1
+        type: integer
+      total_verifications:
+        example: 50
+        type: integer
+    type: object
+  internal_handlers.SetUserStatusRequest:
+    properties:
+      is_active:
+        type: boolean
+    type: object
+  internal_handlers.StartBiometricSessionRequest:
+    properties:
+      continuous_monitoring:
+        example: true
+        type: boolean
+    type: object
+  internal_handlers.StartBiometricSessionResponse:
+    properties:
+      message:
+        example: Biometric session started successfully
+        type: string
+      session_id:
+        example: session_123
+        type: string
+      status:
+        example: active
+        type: string
+      success:
+        example: true
+        type: boolean
+      user_id:
+        example: user_456
+        type: string
+    type: object
+  internal_handlers.UpdateProfileRequest:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      organization:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  internal_handlers.UpdateUserRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      organization:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  internal_handlers.UpdateUserRoleRequest:
+    properties:
+      role:
+        type: string
+    required:
+    - role
+    type: object
+  internal_handlers.UserProfileResponse:
+    properties:
+      created_at:
+        type: integer
+      email:
+        type: string
+      email_verified:
+        type: boolean
+      first_name:
+        type: string
+      id:
+        type: string
+      is_active:
+        type: boolean
+      last_login:
+        type: integer
+      last_name:
+        type: string
+      organization:
+        type: string
+      phone_number:
+        type: string
+      role:
+        type: string
+      updated_at:
+        type: integer
+    type: object
+  internal_handlers.UserResponse:
+    properties:
+      created_at:
+        type: integer
+      email:
+        type: string
+      email_verified:
+        type: boolean
+      first_name:
+        type: string
+      id:
+        type: string
+      is_active:
+        type: boolean
+      last_name:
+        type: string
+      role:
+        type: string
+    type: object
+  internal_handlers.ValidateTokenRequest:
+    properties:
+      token:
+        type: string
+    required:
+    - token
+    type: object
+  internal_handlers.ValidateTokenResponse:
+    properties:
+      error:
+        type: string
+      expires_at:
+        type: integer
+      role:
+        type: string
+      session_id:
+        type: string
+      user_id:
+        type: string
+      valid:
+        type: boolean
+    type: object
+  internal_handlers.VerifyIdentityRequest:
+    properties:
+      image_data:
+        example: base64_encoded_image_data
+        type: string
+      session_id:
+        example: session_123
+        type: string
+      type:
+        allOf:
+        - $ref: '#/definitions/api-gateway_internal_services.BiometricType'
+        example: 0
+    required:
+    - image_data
+    - type
+    type: object
+  internal_handlers.VerifyIdentityResponse:
+    properties:
+      confidence_score:
+        example: 0.98
+        type: number
+      details:
+        $ref: '#/definitions/api-gateway_internal_services.VerificationDetails'
+      error:
+        type: string
+      liveness_passed:
+        example: true
+        type: boolean
+      message:
+        example: Identity verified successfully
+        type: string
+      verified:
+        example: true
+        type: boolean
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: support@sdproctor.com
+    name: SD Proctor API Support
+  description: |-
+    REST API Gateway for the SD Proctor microservices architecture.
+
+    This API provides HTTP endpoints for authentication, user management, session management, and more.
+
+    ## Authentication
+
+    Most endpoints require authentication using JWT tokens. Include the token in the Authorization header:
+
+    ```
+    Authorization: Bearer <your-jwt-token>
+    ```
+
+    ## Roles
+
+    The system supports four main roles:
+    - **candidate**: Regular users taking exams
+    - **mentor**: Users who can manage candidates and view results
+    - **admin**: Full administrative access
+    - **super_admin**: Highest level access including role management
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: SD Proctor API Gateway
+  version: 1.0.0
+paths:
+  /auth/check-permission:
+    get:
+      description: Check if the authenticated user has permission for a specific resource
+        and action
+      parameters:
+      - description: Resource name
+        in: query
+        name: resource
+        required: true
+        type: string
+      - description: Action name
+        in: query
+        name: action
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Check user permission
+      tags:
+      - auth
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user with email and password
+      parameters:
+      - description: Login credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      summary: User login
+      tags:
+      - auth
+  /auth/logout:
+    post:
+      description: Logout user and invalidate session
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: User logout
+      tags:
+      - auth
+  /auth/me:
+    get:
+      description: Get user information for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.UserResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get user information
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user account
+      parameters:
+      - description: Registration details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/internal_handlers.RegisterResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      summary: User registration
+      tags:
+      - auth
+  /auth/validate:
+    post:
+      consumes:
+      - application/json
+      description: Validate the provided JWT token
+      parameters:
+      - description: Token to validate
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.ValidateTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ValidateTokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      summary: Validate JWT token
+      tags:
+      - auth
+  /biometric/continuous-verify:
+    post:
+      consumes:
+      - application/json
+      description: Perform continuous biometric verification during active session
+      parameters:
+      - description: Continuous verification data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.ContinuousVerificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ContinuousVerificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      security:
+      - BearerAuth: []
+      summary: Continuous verification
+      tags:
+      - Biometric
+      x-order: 6
+  /biometric/liveness:
+    post:
+      consumes:
+      - application/json
+      description: Detect if image is from a live person using facial attributes
+      parameters:
+      - description: Liveness detection data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.DetectLivenessRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.DetectLivenessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      security:
+      - BearerAuth: []
+      summary: Detect liveness
+      tags:
+      - Biometric
+      x-order: 7
+  /biometric/record/{recordId}:
+    get:
+      description: Get a specific biometric record by ID
+      parameters:
+      - description: Biometric record ID
+        in: path
+        name: recordId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      security:
+      - BearerAuth: []
+      summary: Get biometric record
+      tags:
+      - Biometric
+      x-order: 9
+  /biometric/register:
+    post:
+      consumes:
+      - application/json
+      description: Register biometric data for the authenticated user
+      parameters:
+      - description: Biometric registration data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.RegisterBiometricRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.RegisterBiometricResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      security:
+      - BearerAuth: []
+      summary: Register biometric data
+      tags:
+      - Biometric
+      x-order: 1
+  /biometric/session/active:
+    get:
+      description: Get information about the user's active biometric session
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.GetActiveBiometricSessionResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      security:
+      - BearerAuth: []
+      summary: Get active biometric session
+      tags:
+      - Biometric
+      x-order: 4
+  /biometric/session/end:
+    post:
+      consumes:
+      - application/json
+      description: End an active biometric verification session
+      parameters:
+      - description: Session end data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.EndBiometricSessionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.EndBiometricSessionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      security:
+      - BearerAuth: []
+      summary: End biometric session
+      tags:
+      - Biometric
+      x-order: 3
+  /biometric/session/start:
+    post:
+      consumes:
+      - application/json
+      description: Start a new biometric verification session
+      parameters:
+      - description: Session configuration
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.StartBiometricSessionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.StartBiometricSessionResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      security:
+      - BearerAuth: []
+      summary: Start biometric session
+      tags:
+      - Biometric
+      x-order: 2
+  /biometric/status:
+    get:
+      description: Get biometric registration status and records for the user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.BiometricStatusResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      security:
+      - BearerAuth: []
+      summary: Get biometric status
+      tags:
+      - Biometric
+      x-order: 8
+  /biometric/verify:
+    post:
+      consumes:
+      - application/json
+      description: Verify user identity using biometric data
+      parameters:
+      - description: Identity verification data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.VerifyIdentityRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.VerifyIdentityResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      security:
+      - BearerAuth: []
+      summary: Verify identity
+      tags:
+      - Biometric
+      x-order: 5
+  /docs:
+    get:
+      description: Interactive API documentation using Scalar
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: API documentation page
+          schema:
+            type: string
+      summary: API Documentation
+      tags:
+      - documentation
+  /docs/auto:
+    get:
+      description: Auto-generated interactive API documentation using Swagger UI
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: Auto-generated API documentation page
+          schema:
+            type: string
+      summary: Auto-generated API Documentation
+      tags:
+      - documentation
+  /docs/openapi.yaml:
+    get:
+      description: OpenAPI 3.0 specification in YAML format
+      produces:
+      - application/x-yaml
+      responses:
+        "200":
+          description: OpenAPI specification
+          schema:
+            type: string
+      summary: OpenAPI Specification
+      tags:
+      - documentation
+  /docs/redoc:
+    get:
+      description: Interactive API documentation using Redoc
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: API documentation page
+          schema:
+            type: string
+      summary: API Documentation (Redoc)
+      tags:
+      - documentation
+  /docs/swagger:
+    get:
+      description: Interactive API documentation using Swagger UI
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: API documentation page
+          schema:
+            type: string
+      summary: API Documentation (Swagger UI)
+      tags:
+      - documentation
+  /docs/swagger.json:
+    get:
+      description: Auto-generated Swagger JSON specification
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Swagger JSON specification
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Auto-generated Swagger JSON
+      tags:
+      - documentation
+  /docs/swagger.yaml:
+    get:
+      description: OpenAPI 3.0 specification in YAML format
+      produces:
+      - application/x-yaml
+      responses:
+        "200":
+          description: OpenAPI specification
+          schema:
+            type: string
+      summary: Swagger Specification
+      tags:
+      - documentation
+  /exams:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all exams associated with the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Exams retrieved successfully
+          schema:
+            $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamListResponse'
+        "401":
+          description: Unauthorized - User not authenticated
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all exams for user
+      tags:
+      - Exams
+    post:
+      consumes:
+      - application/json
+      description: Create a new exam with the provided details
+      parameters:
+      - description: Exam creation request
+        in: body
+        name: exam
+        required: true
+        schema:
+          $ref: '#/definitions/api-gateway_internal_models_exam_models.CreateExamRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Exam created successfully
+          schema:
+            $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamCreateResponse'
+        "400":
+          description: Bad Request - Invalid request payload
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized - User not authenticated
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a new exam
+      tags:
+      - Exams
+  /exams/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a specific exam by its ID
+      parameters:
+      - description: Exam ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Exam retrieved successfully
+          schema:
+            $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamResponse'
+        "400":
+          description: Bad Request - Invalid exam ID
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized - User not authenticated
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get exam by ID
+      tags:
+      - Exams
+  /exams/{id}/results:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve results for a specific exam session
+      parameters:
+      - description: Exam ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Session ID
+        in: query
+        name: session_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Results retrieved successfully
+          schema:
+            $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamResultsResponse'
+        "400":
+          description: Bad Request - Invalid exam ID or session ID
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized - User not authenticated
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get exam results
+      tags:
+      - Exams
+  /exams/{id}/start:
+    post:
+      consumes:
+      - application/json
+      description: Start a new exam session for the specified exam
+      parameters:
+      - description: Exam ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Exam session started successfully
+          schema:
+            $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamSessionResponse'
+        "400":
+          description: Bad Request - Invalid exam ID
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized - User not authenticated
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Start an exam session
+      tags:
+      - Exams
+  /exams/{id}/stats:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve statistics for a specific exam (admin/instructor only)
+      parameters:
+      - description: Exam ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Statistics retrieved successfully
+          schema:
+            $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamStatsResponse'
+        "400":
+          description: Bad Request - Invalid exam ID
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized - User not authenticated
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get exam statistics
+      tags:
+      - Exams
+  /exams/{id}/validate-access:
+    get:
+      consumes:
+      - application/json
+      description: Check if user has access to a specific exam
+      parameters:
+      - description: Exam ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Access validation successful
+          schema:
+            $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamAccessResponse'
+        "400":
+          description: Bad Request - Invalid exam ID
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized - User not authenticated
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden - Access denied
+          schema:
+            $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamAccessResponse'
+      security:
+      - BearerAuth: []
+      summary: Validate exam access
+      tags:
+      - Exams
+  /exams/submit:
+    post:
+      consumes:
+      - application/json
+      description: Submit answers for an active exam session
+      parameters:
+      - description: Exam submission request
+        in: body
+        name: submission
+        required: true
+        schema:
+          $ref: '#/definitions/api-gateway_internal_models_exam_models.SubmitExamRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Exam submitted successfully
+          schema:
+            $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamSubmissionResponse'
+        "400":
+          description: Bad Request - Invalid request payload
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized - User not authenticated
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Submit exam answers
+      tags:
+      - Exams
+  /health:
+    get:
+      description: Check the health status of the API Gateway
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.HealthResponse'
+      summary: Health check
+      tags:
+      - health
+  /live:
+    get:
+      description: Check if the API Gateway is alive
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Liveness check
+      tags:
+      - health
+  /ready:
+    get:
+      description: Check if the API Gateway is ready to serve requests
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "503":
+          description: Service Unavailable
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Readiness check
+      tags:
+      - health
+  /sessions:
+    get:
+      description: Get all sessions for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get user sessions
+      tags:
+      - sessions
+  /sessions/{token}:
+    delete:
+      description: Deactivate a specific session by token
+      parameters:
+      - description: Session token
+        in: path
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Deactivate session
+      tags:
+      - sessions
+  /sessions/{token}/extend:
+    patch:
+      consumes:
+      - application/json
+      description: Extend the duration of a specific session
+      parameters:
+      - description: Session token
+        in: path
+        name: token
+        required: true
+        type: string
+      - description: Extension duration data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.ExtendSessionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Extend session
+      tags:
+      - sessions
+  /sessions/active:
+    get:
+      description: Get all active sessions across all users (admin only)
+      parameters:
+      - default: 50
+        description: Limit for pagination
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset for pagination
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get all active sessions
+      tags:
+      - sessions
+  /sessions/all:
+    delete:
+      description: Deactivate all sessions for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Deactivate all user sessions
+      tags:
+      - sessions
+  /sessions/cleanup:
+    post:
+      description: Remove all expired sessions from the system (admin only)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Cleanup expired sessions
+      tags:
+      - sessions
+  /sessions/current:
+    delete:
+      description: Deactivate the current user's session (logout)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Deactivate current session
+      tags:
+      - sessions
+  /sessions/user/{id}:
+    get:
+      description: Get all sessions for a specific user (admin only)
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get user sessions by ID
+      tags:
+      - sessions
+  /sessions/user/{id}/all:
+    delete:
+      description: Deactivate all sessions for a specific user (admin only)
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Deactivate all sessions for a user
+      tags:
+      - sessions
+  /users:
+    get:
+      description: Get users with pagination and sorting
+      parameters:
+      - default: 0
+        description: Offset for pagination
+        in: query
+        name: offset
+        type: integer
+      - default: 10
+        description: Limit for pagination
+        in: query
+        name: limit
+        type: integer
+      - default: '"created_at"'
+        description: Field to sort by
+        in: query
+        name: sort_by
+        type: string
+      - default: '"desc"'
+        description: Sort order (asc/desc)
+        in: query
+        name: sort_order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get users with pagination
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create a new user account
+      parameters:
+      - description: User creation data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/internal_handlers.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a new user
+      tags:
+      - users
+  /users/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update user information by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: User update data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update user information
+      tags:
+      - users
+  /users/{id}/role:
+    patch:
+      consumes:
+      - application/json
+      description: Update user role by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Role update data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.UpdateUserRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update user role
+      tags:
+      - users
+  /users/{id}/status:
+    patch:
+      consumes:
+      - application/json
+      description: Set user active or inactive status
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Status update data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.SetUserStatusRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Set user status
+      tags:
+      - users
+  /users/{id}/verify-email:
+    post:
+      description: Verify a user's email address
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Verify user email
+      tags:
+      - users
+  /users/exams/history:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve paginated exam history for the authenticated user
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Number of items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Exam history retrieved successfully
+          schema:
+            $ref: '#/definitions/api-gateway_internal_models_exam_models.ExamHistoryResponse'
+        "401":
+          description: Unauthorized - User not authenticated
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get user's exam history
+      tags:
+      - users
+  /users/profile:
+    put:
+      consumes:
+      - application/json
+      description: Update the authenticated user's profile
+      parameters:
+      - description: Profile update data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.UpdateProfileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.UserProfileResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update user profile
+      tags:
+      - users
+  /users/role/{role}:
+    get:
+      description: Get all users with a specific role
+      parameters:
+      - description: User role
+        in: path
+        name: role
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get users by role
+      tags:
+      - users
+  /users/search:
+    post:
+      consumes:
+      - application/json
+      description: Search users based on various criteria
+      parameters:
+      - description: Search criteria
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.SearchUsersRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Search users
+      tags:
+      - users
+  /users/stats:
+    get:
+      description: Get comprehensive user statistics
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handlers.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get user statistics
+      tags:
+      - users
+securityDefinitions:
+  BearerAuth:
+    description: 'JWT token for authentication. Format: Bearer <token>'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

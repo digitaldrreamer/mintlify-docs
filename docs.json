@@ -24,7 +24,10 @@
       },
       {
         "tab": "API reference",
-        "openapi": "api-reference/openapi.json",
+        "openapi": [
+          "api-reference/openapi.json",
+          "api-reference/openapi.yaml"
+        ],
         "groups": [
           {
             "group": "Introduction",
